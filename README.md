@@ -32,3 +32,4 @@ To run the app locally:
 ```
 fastapi dev
 ```
+## architecture
