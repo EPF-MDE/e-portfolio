@@ -1,4 +1,4 @@
-# EPF MD • Web Programming Lab 2
+# Yassine Gharbi and Guillaume de Montgolfier e-portfolio 
 
 ## Outline
 
@@ -10,7 +10,7 @@ This project is a demonstration of web programming principles:
 
 ## Subject
 
-A virtual specialty coffeshop website
+An e-portfolio 
 
 ## Setup
 
