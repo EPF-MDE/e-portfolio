@@ -34,8 +34,18 @@ fastapi dev
 ```
 ## architecture/design
 (ne pas entrer trop dans le détail)
+Creer des class pour chaque "truc" (class profil(BaseModel))  -> (from pydantic import BaseModel)
+form class:
+class Xxx(BaseModel):
+    zzz: int
+    yyy: float
+    uuu: bool | None = none
+
+
+
+(majuscule pour class mais jamais pour variable)
 
 - login  utilisateur (password secure)
-- /profil  pour accéder au profil 
+- /profil  pour accéder au profil (info avec class -> id, name...)
 - /profil/projet
-
+- expérience, skill, projet
