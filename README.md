@@ -32,4 +32,10 @@ To run the app locally:
 ```
 fastapi dev
 ```
-## architecture
+## architecture/design
+(ne pas entrer trop dans le détail)
+
+- login  utilisateur (password secure)
+- /profil  pour accéder au profil 
+- /profil/projet
+
