@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil utilisateur</title>
+</head>
+<body>
+
+    <h1>Profil utilisateur</h1>
+    <p><strong>Nom :</strong> {{ name }}</p>
+    <p><strong>Âge :</strong> {{ age }}</p>
+    <p><strong>Email :</strong> {{ mail }}</p>
+    <p><strong>Téléphone :</strong> {{ phone }}</p>
+
+    <hr>
+
+    <h2>Mes expériences</h2>
+    <ul>
+        {% for exp in experiences %}
+            <li>
+                <strong>{{ exp.title }}</strong> - {{ exp.company }}<br>
+                {{ exp.date_start }} à {{ exp.date_end }}<br>
+                {{ exp.description }}
+            </li>
+        {% else %}
+            <li>Aucune expérience pour le moment.</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- Bouton pour ajouter une nouvelle expérience -->
+    <form action="/profil/experience" method="get">
+        <button type="submit">Ajouter une expérience</button>
+    </form>
+
+</body>
+</html>

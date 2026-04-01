@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une expérience</title>
+</head>
+<body>
+
+    <h1>Ajouter une expérience</h1>
+    <form action="/profil/experience" method="post">
+        <label>Titre :</label>
+        <input type="text" name="title" required><br><br>
+
+        <label>Date de début :</label>
+        <input type="date" name="date_start" required><br><br>
+
+        <label>Date de fin :</label>
+        <input type="date" name="date_end" required><br><br>
+
+        <label>Description :</label>
+        <textarea name="description" rows="3" required></textarea><br><br>
+
+        <label>Entreprise :</label>
+        <input type="text" name="company" required><br><br>
+
+        <button type="submit">Ajouter</button>
+    </form>
+
+</body>
+</html>
