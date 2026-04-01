@@ -22,3 +22,10 @@ class Experience(BaseModel):
     date_end: datetime
     description: str
     company: str
+
+class Education(BaseModel):
+    title: str
+    date_start: datetime
+    date_end: datetime
+    description: str
+    institution: str
