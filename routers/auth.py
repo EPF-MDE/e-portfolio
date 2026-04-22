@@ -22,6 +22,7 @@ def login_user(
     session: Session = Depends(get_session),
 ):
     # debug
+    print("DEBUG LOGIN:")
     print("INPUT:", mail, password)
 
     user = session.exec(select(User).where(User.mail == mail)).first()
@@ -34,4 +35,4 @@ def login_user(
     if not user or user.password != password:
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
-    return RedirectResponse("/profil", status_code=303)
+    return RedirectResponse(f"/profil?mail={mail}", status_code=303)
