@@ -10,35 +10,34 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 
+# Page login (root)
 @router.get("/", response_class=HTMLResponse)
-def login(request: Request):
+def login_page(request: Request):
     return templates.TemplateResponse(request, "login.html", {"request": request})
 
 
+# Page login (optionnel mais utile)
+@router.get("/login", response_class=HTMLResponse)
+def login_page_alias(request: Request):
+    return templates.TemplateResponse(request, "login.html", {"request": request})
+
+
+# Login POST
 @router.post("/login")
 def login_user(
     mail: str = Form(...),
     password: str = Form(...),
     session: Session = Depends(get_session),
 ):
-    # debug
-    print("DEBUG LOGIN:")
-    print("INPUT:", mail, password)
-
     user = session.exec(select(User).where(User.mail == mail)).first()
-
-    print("USER:", user)
-
-    if user:
-        print("DB PASSWORD:", user.password)
 
     if not user or user.password != password:
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     return RedirectResponse(f"/profil?mail={mail}", status_code=303)
 
+
+# Logout
 @router.get("/logout")
 def logout():
     return RedirectResponse("/", status_code=303)
-
-

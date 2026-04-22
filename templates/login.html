@@ -2,14 +2,14 @@
 <html lang="fr">
 
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', path='login.css') }}">
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Connexion</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='login.css') }}">
 </head>
 
 <body>
 
-    <h1>Welcome to our e-portfolio website</h1>
+    <h1 style="text-align:center;">Welcome to our e-portfolio website</h1>
 
     <div class="login-container">
         <h2>Connexion</h2>
@@ -22,7 +22,8 @@
         </form>
 
         <div class="footer">
-            Pas encore de compte ? <a href="/create_user">S'inscrire</a>
+            Pas encore de compte ?
+            <a href="/create_user">S'inscrire</a>
         </div>
     </div>
 

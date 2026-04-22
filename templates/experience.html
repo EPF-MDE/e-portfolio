@@ -2,32 +2,56 @@
 <html lang="fr">
 
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', path='base.css') }}">
     <meta charset="UTF-8">
-    <title>Ajouter une expérience</title>
+    <title>Expérience</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='base.css') }}">
 </head>
 
 <body>
 
-    <h1>Ajouter une expérience</h1>
-    <form action="/profil/experience" method="post">
-        <label>Titre :</label>
-        <input type="text" name="title" required><br><br>
+    <div class="container">
 
-        <label>Date de début :</label>
-        <input type="date" name="date_start" required><br><br>
+        <h1>
+            {% if exp %}
+            Modifier une expérience
+            {% else %}
+            Ajouter une expérience
+            {% endif %}
+        </h1>
 
-        <label>Date de fin :</label>
-        <input type="date" name="date_end" required><br><br>
+        <form
+            action="{% if exp %}/profil/experience/edit/{{ exp.id }}?mail={{ mail }}{% else %}/profil/experience?mail={{ mail }}{% endif %}"
+            method="post">
 
-        <label>Description :</label>
-        <textarea name="description" rows="3" required></textarea><br><br>
+            <label>Titre :</label>
+            <input type="text" name="title" value="{{ exp.title if exp else '' }}" required>
 
-        <label>Entreprise :</label>
-        <input type="text" name="company" required><br><br>
+            <label>Date de début :</label>
+            <input type="date" name="date_start" value="{{ exp.date_start.strftime('%Y-%m-%d') if exp else '' }}"
+                required>
 
-        <button type="submit">Ajouter</button>
-    </form>
+            <label>Date de fin :</label>
+            <input type="date" name="date_end" value="{{ exp.date_end.strftime('%Y-%m-%d') if exp else '' }}" required>
+
+            <label>Description :</label>
+            <textarea name="description" rows="3" required>{{ exp.description if exp else '' }}</textarea>
+
+            <label>Entreprise :</label>
+            <input type="text" name="company" value="{{ exp.company if exp else '' }}" required>
+
+            <button type="submit">
+                {% if exp %}Mettre à jour{% else %}Ajouter{% endif %}
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="/profil?mail={{ mail }}">
+            <button type="button">Retour</button>
+        </a>
+
+    </div>
 
 </body>
 
