@@ -2,27 +2,42 @@
 <html lang="fr">
 
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', path='base.css') }}">
     <meta charset="UTF-8">
     <title>Profil utilisateur</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='base.css') }}">
 </head>
 
 <body>
 
-    <h1>Utilisateur : {{ name }}</h1>
-    <p><strong>Nom :</strong> {{ name }}</p>
-    <p><strong>Âge :</strong> {{ age }}</p>
-    <p><strong>Email :</strong> {{ mail }}</p>
-    <p><strong>Téléphone :</strong> {{ phone }}</p>
+<div class="container">
+
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Bienvenue {{ name }}</h1>
+
+        <form action="/logout" method="get">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <!-- Infos utilisateur -->
+    <div>
+        <p><strong>Nom :</strong> {{ name }}</p>
+        <p><strong>Âge :</strong> {{ age }}</p>
+        <p><strong>Email :</strong> {{ mail }}</p>
+        <p><strong>Téléphone :</strong> {{ phone }}</p>
+    </div>
 
     <hr>
 
+    <!-- Expériences -->
     <h2>Mes expériences</h2>
+
     <ul>
         {% for exp in experiences %}
         <li>
             <strong>{{ exp.title }}</strong> - {{ exp.company }}<br>
-            {{ exp.date_start }} à {{ exp.date_end }}<br>
+            <small>{{ exp.date_start }} → {{ exp.date_end }}</small><br>
             {{ exp.description }}
         </li>
         {% else %}
@@ -32,10 +47,14 @@
 
     <hr>
 
-    <!-- Bouton pour ajouter une nouvelle expérience -->
-    <form action="/profil/experience" method="get">
-        <button type="submit">Ajouter une expérience</button>
-    </form>
+    <!-- Actions -->
+    <div style="display: flex; gap: 10px;">
+        <form action="/profil/experience" method="get">
+            <button type="submit">Ajouter une expérience</button>
+        </form>
+    </div>
+
+</div>
 
 </body>
 

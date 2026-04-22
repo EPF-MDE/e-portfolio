@@ -28,7 +28,7 @@ h2 {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* TEXT */
@@ -51,7 +51,8 @@ form {
     margin-top: 20px;
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 10px;
     margin: 8px 0;
@@ -76,4 +77,16 @@ button:hover {
 /* HR */
 hr {
     margin: 25px 0;
+}
+
+button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    background: #007BFF;
+    color: white;
+}
+
+button:hover {
+    background: #007BFF;
 }

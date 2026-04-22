@@ -36,3 +36,9 @@ def login_user(
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     return RedirectResponse(f"/profil?mail={mail}", status_code=303)
+
+@router.get("/logout")
+def logout():
+    return RedirectResponse("/", status_code=303)
+
+
