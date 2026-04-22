@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', path='base.css') }}">
     <meta charset="UTF-8">
     <title>Profil utilisateur</title>
 </head>
+
 <body>
 
-    <h1>Profil utilisateur</h1>
+    <h1>Utilisateur : {{ name }}</h1>
     <p><strong>Nom :</strong> {{ name }}</p>
     <p><strong>Âge :</strong> {{ age }}</p>
     <p><strong>Email :</strong> {{ mail }}</p>
@@ -17,13 +20,13 @@
     <h2>Mes expériences</h2>
     <ul>
         {% for exp in experiences %}
-            <li>
-                <strong>{{ exp.title }}</strong> - {{ exp.company }}<br>
-                {{ exp.date_start }} à {{ exp.date_end }}<br>
-                {{ exp.description }}
-            </li>
+        <li>
+            <strong>{{ exp.title }}</strong> - {{ exp.company }}<br>
+            {{ exp.date_start }} à {{ exp.date_end }}<br>
+            {{ exp.description }}
+        </li>
         {% else %}
-            <li>Aucune expérience pour le moment.</li>
+        <li>Aucune expérience pour le moment.</li>
         {% endfor %}
     </ul>
 
@@ -35,4 +38,5 @@
     </form>
 
 </body>
+
 </html>
