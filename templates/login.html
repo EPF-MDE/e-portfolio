@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', path='login.css') }}">
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <h1>Welcome to our e-portfolio website</h1>
+
+    <div class="login-container">
+        <h2>Connexion</h2>
+
+        <form action="/login" method="post">
+            <input type="email" name="mail" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div class="footer">
+            Pas encore de compte ? <a href="/create_user">S'inscrire</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

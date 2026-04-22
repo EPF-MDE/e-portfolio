@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from typing import Annotated
 from datetime import datetime
 from sqlmodel import Session
+from fastapi.staticfiles import StaticFiles
 
 
 from core.database_2 import create_db_and_tables, get_session
@@ -13,8 +14,9 @@ from schemas.Education import Education
 
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory="template")
+templates = Jinja2Templates(directory="templates")
 
 
 @app.on_event("startup")
@@ -78,7 +80,7 @@ def create_exp(
 
     user = User(name=name, age=age, mail=mail, phone=phone)
 
-    # 🔥 sauvegarde en base
+    # sauvegarde en base
     session.add(user)
     session.commit()
     session.refresh(user)
@@ -129,7 +131,7 @@ def create_exp(
         company=company,
     )
 
-    # 🔥 sauvegarde en base
+    # sauvegarde en base
     session.add(experience)
     session.commit()
     session.refresh(experience)
