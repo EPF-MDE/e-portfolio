@@ -11,13 +11,13 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 
-# 🔹 Form create user
+# Form create user
 @router.get("/create_user", response_class=HTMLResponse)
 def show_form(request: Request):
-    return templates.TemplateResponse("create_user.html", {"request": request})
+    return templates.TemplateResponse(request, "create_user.html", {"request": request})
 
 
-# 🔹 Create user
+# Create user
 @router.post("/create_user")
 def create_user(
     name: str = Form(...),
@@ -35,21 +35,27 @@ def create_user(
     return RedirectResponse("/", status_code=303)
 
 
-# 🔹 Profil
+# Profil
 @router.get("/profil", response_class=HTMLResponse)
 def show_profile(request: Request, mail: str, session: Session = Depends(get_session)):
     user = session.exec(select(User).where(User.mail == mail)).first()
-    experiences = session.exec(select(Experience)).all()
+
+    if not user:
+        return RedirectResponse("/", status_code=303)
+
+    experiences = session.exec(
+        select(Experience).where(Experience.user_id == user.id)
+    ).all()
 
     return templates.TemplateResponse(
         request,
         "profil.html",
         {
             "request": request,
-            "name": user.name if user else "",
-            "age": user.age if user else "",
-            "mail": user.mail if user else "",
-            "phone": user.phone if user else "",
+            "name": user.name,
+            "age": user.age,
+            "mail": user.mail,
+            "phone": user.phone,
             "experiences": experiences,
         },
     )
