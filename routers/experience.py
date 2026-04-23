@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from sqlmodel import Session
+from sqlmodel import Session, select
 from datetime import datetime
 
 from core.database_2 import get_session
 from schemas.Experiences import Experience
+from schemas.User import User
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -33,12 +34,18 @@ def create_experience(
     company: str = Form(...),
     session: Session = Depends(get_session),
 ):
+    user = session.exec(select(User).where(User.mail == mail)).first()
+
+    if not user:
+        return RedirectResponse("/", status_code=303)
+
     experience = Experience(
         title=title,
         date_start=datetime.strptime(date_start, "%Y-%m-%d"),
         date_end=datetime.strptime(date_end, "%Y-%m-%d"),
         description=description,
         company=company,
+        user_id=user.id,
     )
 
     session.add(experience)
@@ -54,9 +61,11 @@ def delete_experience(
     mail: str,
     session: Session = Depends(get_session),
 ):
+    user = session.exec(select(User).where(User.mail == mail)).first()
+
     exp = session.get(Experience, exp_id)
 
-    if exp:
+    if exp and user and exp.user_id == user.id:
         session.delete(exp)
         session.commit()
 
@@ -71,7 +80,11 @@ def edit_experience_form(
     mail: str,
     session: Session = Depends(get_session),
 ):
+    user = session.exec(select(User).where(User.mail == mail)).first()
     exp = session.get(Experience, exp_id)
+
+    if not exp or not user or exp.user_id != user.id:
+        return RedirectResponse(f"/profil?mail={mail}", status_code=303)
 
     return templates.TemplateResponse(
         request,
@@ -92,9 +105,10 @@ def update_experience(
     company: str = Form(...),
     session: Session = Depends(get_session),
 ):
+    user = session.exec(select(User).where(User.mail == mail)).first()
     exp = session.get(Experience, exp_id)
 
-    if exp:
+    if exp and user and exp.user_id == user.id:
         exp.title = title
         exp.date_start = datetime.strptime(date_start, "%Y-%m-%d")
         exp.date_end = datetime.strptime(date_end, "%Y-%m-%d")

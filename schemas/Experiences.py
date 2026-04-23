@@ -10,3 +10,4 @@ class Experience(SQLModel, table=True):
     date_end: datetime
     description: str
     company: str
+    user_id: int = Field(foreign_key="user.id")
