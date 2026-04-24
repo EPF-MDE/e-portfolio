@@ -23,15 +23,47 @@ It allows users to:
 - User authentication (login / logout)
 - User creation with database persistence
 - Dynamic profile page
-- Full CRUD for experiences:
-  - Create
-  - Read
-  - Update
-  - Delete
+- CRUD ops for :
+  - Experiences
+  - Educations
 - Multi-user support:
-  - Each user has their own experiences
+  - Each user has their own experiences / educations 
   - Data isolation between users
 
+## Database Design
+
+The application uses a **relational database** with the following structure:
+
+### User
+- id (PK)
+- name
+- mail
+- password
+- etc.
+
+### Experience
+- id (PK)
+- title, company, dates, etc.
+- user_id (FK → User.id)
+
+### Education
+- id (PK)
+- school_name, major, dates, etc.
+- user_id (FK → User.id)
+
+---
+
+## Relationships
+
+- **User → Experience** : 1 → N  
+  → one user can have multiple experiences
+
+- **User → Education** : 1 → N  
+  → one user can have multiple education entries
+
+👉 This means:
+- each experience belongs to **one user**
+- each education belongs to **one user**
 
 
 

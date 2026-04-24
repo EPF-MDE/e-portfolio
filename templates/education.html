@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Éducation</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='base.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            {% if edu %}
+            Modifier une éducation
+            {% else %}
+            Ajouter une éducation
+            {% endif %}
+        </h1>
+
+        <form
+            action="{% if edu %}/profil/education/edit/{{ edu.id }}?mail={{ mail }}{% else %}/profil/education?mail={{ mail }}{% endif %}"
+            method="post">
+
+
+            <label>École :</label>
+            <input type="text" name="school_name" value="{{ edu.school_name if edu else '' }}" required>
+
+
+            <label>Date de début :</label>
+            <input type="date" name="date_start" value="{{ edu.date_start.strftime('%Y-%m-%d') if edu else '' }}"
+                required>
+
+            <label>Date de fin :</label>
+            <input type="date" name="date_end" value="{{ edu.date_end.strftime('%Y-%m-%d') if edu else '' }}" required>
+
+            <label>Description :</label>
+            <textarea name="description" rows="3" required>{{ edu.description if edu else '' }}</textarea>
+
+            <label>Spécialité :</label>
+            <input type="text" name="major" value="{{ edu.major if edu else '' }}" required>
+
+
+            <button type="submit">
+                {% if edu %}Mettre à jour{% else %}Ajouter{% endif %}
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="/profil?mail={{ mail }}">
+            <button type="button">Retour</button>
+        </a>
+
+    </div>
+
+</body>
+
+</html>

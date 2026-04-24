@@ -10,3 +10,5 @@ class Education(SQLModel, table=True):
     date_end: datetime
     description: str
     major: str
+
+    user_id: int = Field(foreign_key="user.id")

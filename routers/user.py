@@ -6,6 +6,7 @@ from sqlmodel import Session, select
 from core.database_2 import get_session
 from schemas.User import User
 from schemas.Experiences import Experience
+from schemas.Education import Education
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -41,6 +42,7 @@ def create_user(
 
     session.add(user)
     session.commit()
+    session.refresh(user)
 
     return RedirectResponse("/", status_code=303)
 
@@ -57,6 +59,10 @@ def show_profile(request: Request, mail: str, session: Session = Depends(get_ses
         select(Experience).where(Experience.user_id == user.id)
     ).all()
 
+    educations = session.exec(
+        select(Education).where(Education.user_id == user.id)
+    ).all()
+
     return templates.TemplateResponse(
         request,
         "profil.html",
@@ -67,5 +73,6 @@ def show_profile(request: Request, mail: str, session: Session = Depends(get_ses
             "mail": user.mail,
             "phone": user.phone,
             "experiences": experiences,
+            "educations": educations,
         },
     )
