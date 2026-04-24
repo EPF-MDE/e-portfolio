@@ -27,7 +27,17 @@ def create_user(
     password: str = Form(...),
     session: Session = Depends(get_session),
 ):
+    # Debug :
+    print("DEBUG CREATE USER")
+    print("INPUT name:", name)
+    print("INPUT age:", age)
+    print("INPUT mail:", mail)
+    print("INPUT phone:", phone)
+    print("INPUT password:", password)
+
     user = User(name=name, age=age, mail=mail, phone=phone, password=password)
+
+    print("DEBUG USER CREATED:", user)
 
     session.add(user)
     session.commit()
