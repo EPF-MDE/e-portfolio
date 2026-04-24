@@ -32,13 +32,7 @@ It allows users to:
   - Each user has their own experiences
   - Data isolation between users
 
-## Project Structure
-├── core/ # Database setup
-├── routers/ # Route logic (auth, user, experience)
-├── schemas/ # SQLModel models
-├── templates/ # HTML templates (Jinja2)
-├── static/ # CSS files
-├── main.py # App entry point
+
 
 
 ## Setup
