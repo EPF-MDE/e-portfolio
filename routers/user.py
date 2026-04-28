@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
+from datetime import date
 
 from core.database_2 import get_session
 from schemas.User import User
@@ -10,6 +11,16 @@ from schemas.Education import Education
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
+
+
+def calculate_age(birth_date: date) -> int:
+    """Calcule l'âge à partir de la date de naissance"""
+    today_date = date.today()
+    age = today_date.year - birth_date.year
+    # Soustraire 1 si l'anniversaire n'est pas encore passé cette année
+    if (today_date.month, today_date.day) < (birth_date.month, birth_date.day):
+        age -= 1
+    return age
 
 
 # Form create user
@@ -22,23 +33,24 @@ def show_form(request: Request):
 @router.post("/create_user")
 def create_user(
     name: str = Form(...),
-    age: int = Form(...),
+    first_name: str = Form(...),
+    birth_date: str = Form(...),
     mail: str = Form(...),
     phone: str = Form(...),
     password: str = Form(...),
     session: Session = Depends(get_session),
 ):
-    # Debug :
-    print("DEBUG CREATE USER")
-    print("INPUT name:", name)
-    print("INPUT age:", age)
-    print("INPUT mail:", mail)
-    print("INPUT phone:", phone)
-    print("INPUT password:", password)
+    # Convertir la date en objet Python date
+    birth_date_obj = date.fromisoformat(birth_date)
 
-    user = User(name=name, age=age, mail=mail, phone=phone, password=password)
-
-    print("DEBUG USER CREATED:", user)
+    user = User(
+        name=name,
+        first_name=first_name,
+        birth_date=birth_date_obj,
+        mail=mail,
+        phone=phone,
+        password=password,
+    )
 
     session.add(user)
     session.commit()
@@ -69,7 +81,8 @@ def show_profile(request: Request, mail: str, session: Session = Depends(get_ses
         {
             "request": request,
             "name": user.name,
-            "age": user.age,
+            "first_name": user.first_name,
+            "age": calculate_age(user.birth_date),
             "mail": user.mail,
             "phone": user.phone,
             "experiences": experiences,

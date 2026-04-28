@@ -3,12 +3,11 @@ from core.database_2 import engine
 from schemas.User import User
 from schemas.Experiences import Experience
 from schemas.Education import Education
-from datetime import datetime
+from datetime import datetime, date
 
 
 def seed():
     with Session(engine) as session:
-
         # éviter de reseed si déjà rempli
         existing = session.exec(select(User)).first()
         if existing:
@@ -16,13 +15,17 @@ def seed():
             return
 
         for i in range(1, 11):
+            # Calculer une date de naissance pour avoir environ 20+i ans
+            birth_year = date.today().year - (20 + i)
+            birth_date = date(birth_year, 1, 15)  # 15 janvier
 
             user = User(
                 name=f"User{i}",
-                age=20 + i,
+                first_name=f"Prénom{i}",
+                birth_date=birth_date,
                 mail=f"user{i}@mail.com",
                 phone=f"06000000{i:02}",
-                password="test"
+                password="test",
             )
 
             session.add(user)
@@ -36,7 +39,7 @@ def seed():
                 date_end=datetime(2019, 6, 1),
                 description="Bachelor degree",
                 major="Computer Science",
-                user_id=user.id
+                user_id=user.id,
             )
 
             session.add(edu)
@@ -48,7 +51,7 @@ def seed():
                 date_end=datetime(2020, 6, 1),
                 description="First experience",
                 company="Company A",
-                user_id=user.id
+                user_id=user.id,
             )
 
             exp2 = Experience(
@@ -57,7 +60,7 @@ def seed():
                 date_end=datetime(2022, 1, 1),
                 description="Second experience",
                 company="Company B",
-                user_id=user.id
+                user_id=user.id,
             )
 
             session.add(exp1)
