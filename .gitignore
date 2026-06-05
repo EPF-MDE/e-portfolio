@@ -214,6 +214,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+<<<<<<< HEAD
 
 e-portfolio-venv/
 e-portfolio-env/
+=======
+.env
+database.db
+>>>>>>> master

@@ -2,9 +2,15 @@ from datetime import datetime, timedelta, timezone
 
 import jwt
 from pwdlib import PasswordHash
+import os 
+from dotenv import load_dotenv
 
 
-SECRET_KEY = "CHANGE_THIS_WITH_A_RANDOM_SECRET_KEY"
+
+
+load_dotenv() 
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
